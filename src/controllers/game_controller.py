@@ -22,7 +22,7 @@ from .stages.stage_controllers import (
 
 from ..views.notepad_view import NotepadView
 from ..views.hud_view     import HUDView
-from ..views.stages.stage_views import (
+from ..views.stages import (
     RedCircleView,
     SelfAwareView,
     BrokenCalcView,
@@ -32,7 +32,7 @@ from ..views.stages.stage_views import (
     GravityView,
 )
 from ..views.base_view    import BG, WIDTH, HEIGHT, rainbow_color
-from ..utils.transitions  import Transition, WinScreen, GameOverScreen
+from ..utils  import Transition, WinScreen, GameOverScreen
 from ..utils.sfx          import SFX
 
 
