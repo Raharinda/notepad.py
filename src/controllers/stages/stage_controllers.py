@@ -9,6 +9,7 @@ import time
 import pygame
 from ...models.stage_model import StageModel
 from ...utils.sfx import SFX
+from ...views.base_view import WIDTH, HEIGHT
 
 
 def _make_model(stage_id, title, objective, duration) -> StageModel:
@@ -284,10 +285,7 @@ class TeleportController:
         d["taunt_life"] = 0.0
         d["shake"]      = 0
 
-        # import here to avoid circular
-        global WIDTH, HEIGHT
-        from ...views.base_view import WIDTH as W, HEIGHT as H
-        WIDTH, HEIGHT = W, H
+
 
     def _teleport(self):
         d = self.model.data
@@ -508,9 +506,7 @@ class GravityController:
         d["goal"]      = 3
         d["shake"]     = 0
 
-        global HEIGHT
-        from ...views.base_view import HEIGHT as H
-        HEIGHT = H
+
 
     def _make_buttons(self):
         labels = ["7","8","9","÷","4","5","6","×","1","2","3","-","0",".","=","+"]
@@ -584,7 +580,3 @@ class GravityController:
         if all_fallen and not m.done:
             m.failed     = True
             m.fail_reason = "All buttons fell! No more '=' to click."
-
-
-# import WIDTH/HEIGHT at module level for teleport
-from ...views.base_view import WIDTH, HEIGHT
