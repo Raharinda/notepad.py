@@ -169,23 +169,22 @@ class GameController:
 
         if phase == Phase.NOTEPAD:
             self.screen.fill((240, 240, 238))   # OS-level bg colour
-            self.notepad_view.draw(
+            self.notepad_view.draw_notepad_phase(
                 self.screen, self.nm, self.gs,
                 self.input_ctrl.mouse_pos
             )
 
         elif phase in (Phase.STAGE, Phase.TRANSITION):
-            # stage draws its own bg
-            self._draw_bg_particles(dt)
+            # notepad shell first, then stage content inside it
+            self.notepad_view.draw_stage_shell(
+                self.screen,
+                self.gs,
+                self.stage_ctrl.model,
+            )
             self.stage_view.draw(
                 self.screen,
                 self.nm,
                 self.stage_ctrl.model,
-            )
-            self.hud_view.draw(
-                self.screen,
-                self.stage_ctrl.model,
-                self.gs,
             )
             if phase == Phase.TRANSITION and self.transition:
                 self.transition.draw(self.screen)
@@ -196,8 +195,8 @@ class GameController:
                 self.win_screen.draw(self.screen)
 
         elif phase == Phase.GAME_OVER:
-            # draw last stage underneath
-            self._draw_bg_particles(dt)
+            self.notepad_view.draw_stage_shell(
+                self.screen, self.gs, self.stage_ctrl.model)
             self.stage_view.draw(self.screen, self.nm, self.stage_ctrl.model)
             if self.gameover:
                 self.gameover.draw(self.screen)

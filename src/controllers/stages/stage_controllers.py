@@ -32,7 +32,7 @@ class RedCircleController:
         )
         d = self.model.data
         d["cx"]        = float(450)
-        d["cy"]        = float(300)
+        d["cy"]        = float(380)
         d["r"]         = 34
         d["speed"]     = 115
         d["anger"]     = 0.0
@@ -198,9 +198,10 @@ class BrokenCalcController:
         btns, used = [], set()
         target = "="
         for lbl in labels:
-            for _ in range(200):
-                x = random.randint(60, 820)
-                y = random.randint(120, 570)
+            from ...views.notepad_view import CONTENT_X, CONTENT_Y, CONTENT_W, CONTENT_H
+        for _ in range(200):
+                x = random.randint(CONTENT_X+30, CONTENT_X+CONTENT_W-80)
+                y = random.randint(CONTENT_Y+50, CONTENT_Y+CONTENT_H-60)
                 ok = all(abs(x-ux) >= 68 or abs(y-uy) >= 48 for ux,uy in used)
                 if ok:
                     used.add((x, y))
@@ -236,8 +237,9 @@ class BrokenCalcController:
             btn["wobble"] += dt * random.uniform(1, 3)
             btn["x"] += random.uniform(-0.6, 0.6)
             btn["y"] += random.uniform(-0.6, 0.6)
-            btn["x"]  = max(40, min(860, btn["x"]))
-            btn["y"]  = max(110, min(590, btn["y"]))
+            from ...views.notepad_view import CONTENT_X, CONTENT_Y, CONTENT_W, CONTENT_H
+            btn["x"]  = max(CONTENT_X+20, min(CONTENT_X+CONTENT_W-20, btn["x"]))
+            btn["y"]  = max(CONTENT_Y+20, min(CONTENT_Y+CONTENT_H-20, btn["y"]))
 
         for ev in events:
             if ev.type == pygame.MOUSEBUTTONDOWN:
@@ -276,7 +278,7 @@ class TeleportController:
             "Click the button 3 times!", 25
         )
         d = self.model.data
-        d["btn_rect"]   = [WIDTH//2-70, HEIGHT//2-30, 140, 60]
+        d["btn_rect"]   = [WIDTH//2-60, 350, 120, 50]
         d["clicks"]     = 0
         d["goal"]       = 3
         d["trail"]      = []
@@ -291,10 +293,11 @@ class TeleportController:
         d = self.model.data
         r = d["btn_rect"]
         d["trail"].append({"x": r[0]+r[2]//2, "y": r[1]+r[3]//2, "life": 1.0})
-        margin = 90
+        from ...views.notepad_view import CONTENT_X, CONTENT_Y, CONTENT_W, CONTENT_H
+        margin = 20
         d["btn_rect"] = [
-            random.randint(margin, WIDTH - margin - r[2]),
-            random.randint(100,    HEIGHT - margin - r[3]),
+            random.randint(CONTENT_X + margin, CONTENT_X + CONTENT_W - margin - r[2]),
+            random.randint(CONTENT_Y + margin, CONTENT_Y + CONTENT_H - margin - r[3]),
             r[2], r[3],
         ]
         d["last_taunt"] = random.choice(self.TAUNTS)
@@ -347,9 +350,10 @@ class ShyButtonsController:
     def _make_buttons(self):
         labels = list("ABCDEFGHIJKL")
         btns   = []
+        from ...views.notepad_view import CONTENT_X, CONTENT_Y
         for i, lbl in enumerate(labels):
-            bx = 95 + (i % 4) * 185
-            by = 155 + (i // 4) * 115
+            bx = CONTENT_X + 50 + (i % 4) * 195
+            by = CONTENT_Y + 40 + (i // 4) * 110
             btns.append({
                 "id":       i,
                 "label":    lbl,
@@ -391,8 +395,9 @@ class ShyButtonsController:
             btn["vy"] *= 0.84
             btn["x"]  += btn["vx"] * dt * 60
             btn["y"]  += btn["vy"] * dt * 60
-            btn["x"]   = max(35,  min(865, btn["x"]))
-            btn["y"]   = max(100, min(570, btn["y"]))
+            from ...views.notepad_view import CONTENT_X, CONTENT_Y, CONTENT_W, CONTENT_H
+            btn["x"]   = max(CONTENT_X+35, min(CONTENT_X+CONTENT_W-35, btn["x"]))
+            btn["y"]   = max(CONTENT_Y+20, min(CONTENT_Y+CONTENT_H-20, btn["y"]))
 
         for ev in events:
             if ev.type == pygame.MOUSEBUTTONDOWN:
@@ -501,7 +506,8 @@ class GravityController:
         d["buttons"]   = self._make_buttons()
         d["display"]   = "HELP IM FALLING"
         d["gravity"]   = 80.0
-        d["floor"]     = HEIGHT - 30
+        from ...views.notepad_view import CONTENT_Y, CONTENT_H
+        d["floor"]     = CONTENT_Y + CONTENT_H - 20
         d["eq_clicks"] = 0
         d["goal"]      = 3
         d["shake"]     = 0
@@ -511,9 +517,11 @@ class GravityController:
     def _make_buttons(self):
         labels = ["7","8","9","÷","4","5","6","×","1","2","3","-","0",".","=","+"]
         btns   = []
-        bw, bh = 70, 52
-        bx, by = 260, 155
-        gap    = 8
+        from ...views.notepad_view import CONTENT_X, CONTENT_Y
+        bw, bh = 62, 46
+        bx     = CONTENT_X + 60
+        by     = CONTENT_Y + 60
+        gap    = 6
         for i, lbl in enumerate(labels):
             c, r = i%4, i//4
             btns.append({
