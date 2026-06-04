@@ -10,7 +10,7 @@ from ..models.notepad_model import NotepadModel
 
 from .input_controller    import InputController
 from .notepad_controller  import NotepadController
-from .stages.stage_controllers import (
+from .stages import (
     RedCircleController,
     SelfAwareController,
     BrokenCalcController,
@@ -22,7 +22,7 @@ from .stages.stage_controllers import (
 
 from ..views.notepad_view import NotepadView
 from ..views.hud_view     import HUDView
-from ..views.stages.stage_views import (
+from ..views.stages import (
     RedCircleView,
     SelfAwareView,
     BrokenCalcView,
