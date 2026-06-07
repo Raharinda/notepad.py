@@ -4,15 +4,14 @@ Collects and exposes raw pygame events each frame.
 Other controllers pull from this.
 """
 import pygame
-import sys
 
 
 class InputController:
     def __init__(self):
-        self.events:     list  = []
-        self.mouse_pos:  tuple = (0, 0)
-        self.quit:       bool  = False
-        self.restart:    bool  = False
+        self.events:    list  = []
+        self.mouse_pos: tuple = (0, 0)
+        self.quit:      bool  = False
+        self.restart:   bool  = False
 
     def pump(self):
         """Call once per frame to refresh events."""
