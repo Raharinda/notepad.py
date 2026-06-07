@@ -5,9 +5,10 @@ Run with: python3 main.py
 import os
 import pygame
 from src.controllers.game_controller import GameController
+from src.models.game_state import Phase
 import os
-os.environ["SDL_VIDEODRIVER"] = "x11"   # force standalone window
-os.environ["DISPLAY"] = ":0"
+# os.environ["SDL_VIDEODRIVER"] = "x11"   # force standalone window
+# os.environ["DISPLAY"] = ":0"
 
 INTERNAL_W, INTERNAL_H = 900, 650
 FPS = 60
@@ -54,7 +55,7 @@ def main():
         if game.input_ctrl.quit:
             pygame.quit()
             sys.exit()
-        if game.input_ctrl.restart:
+        if game.input_ctrl.restart and game.gs.phase in (Phase.WIN, Phase.GAME_OVER):
             game._init_game()
             continue
 
